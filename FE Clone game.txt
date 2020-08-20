@@ -1,0 +1,40 @@
+Fire emblem esque game but multiplayer
+players have a lord character that they can fully customize
+at the start of their play through
+have players recriut there party through solo missions pve
+	-> could also buy them as mercs
+once a party member dies they're gone for good
+once you lose a lord it's game over, need to restart from lvl 1
+all pvp maps have a fog of war
+can't upgrade character classes like in fire emblem only lvl
+need many maps, (possibly randomly generated but split into a few catagories)
+		-> mountians, seaside, snow, desert, forest, plains
+get gear from solo missions and from pvp -> kill enemy get their gear
+		-> also buy from shop by selling other gear
+		-> have rare items not in shops
+
+axes>lances>swords>axes
+mage>druid>warlock>mage
+
+possible classes:
+thief -> high evade, daggers, low dmg, can steal (has a chance to fail)
+assasin -> high dmg, daggers, low health, high crit when starting engagement
+calvary -> high mvnt, lances, and swords,  mvnt limited in water/mountains, low evade
+peg/wayvern -> highest mvnt, lances, weak to arrows, 
+archers -> ranged dmg, high evade, can't hit close range
+mage -> flex dmg, peirce armour, low health, and def
+cleric -> heals, low dmg, low health, low def
+pirates -> axe weilders, high water mvnt, high dmg, low hit, high health
+berserks -> axe weilders, high mountain mvnt, high dmg, low hit, high health
+knight -> lances, low dmg, low evade, high arm, high health
+dragon kin -> transform to a drag for a few turns, exhausted afterwards
+	   -> low stats in reg state but high in dragon state
+druids -> magic, flex dmg, forest mvnt can summon pets -> takes their action
+						-> summon can't attack first turn in play
+warlock -> magic, flex dmg, summons undead -> takes their action
+					-> summon misses their first action turn
+alchemist -> can't attack, lays traps and can create golems
+					-> takes action -> golems miss first action
+fighter -> equip axe/sword/lance -> strongest in one, others have lower hit rate
+
+
