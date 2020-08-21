@@ -175,6 +175,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1491643653}
   - component: {fileID: 1491643652}
+  - component: {fileID: 1491643654}
   m_Layer: 0
   m_Name: Girl Sword Test
   m_TagString: Untagged
@@ -220,7 +221,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 778d06b01658f0f4983e341754f5ace6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -240,12 +241,24 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1491643651}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.424, y: 4.516, z: 0}
+  m_LocalPosition: {x: -6.555, y: 2.493, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1491643654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1491643651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37612fe42850d0c4b99df46f4477f607, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1780094693
 GameObject:
   m_ObjectHideFlags: 0
@@ -355,7 +368,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1900396795}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.05, y: -0, z: 0}
+  m_LocalPosition: {x: 0.01, y: -0.03, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 655831986}
@@ -379,7 +392,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 6f5e192390e0efb45ab6a4671c4d856a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2220,7 +2233,7 @@ Tilemap:
   m_AnimatedTiles: {}
   m_TileAssetArray:
   - m_RefCount: 200
-    m_Data: {fileID: 11400000, guid: 14af00d4c8eafb742b9bec4d6519d6ac, type: 2}
+    m_Data: {fileID: 0}
   m_TileSpriteArray:
   - m_RefCount: 200
     m_Data: {fileID: 21300000, guid: 003b2049fc391244a92e41be7b3e091f, type: 3}
