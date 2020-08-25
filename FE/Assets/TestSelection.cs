@@ -52,7 +52,19 @@ public class TestSelection : MonoBehaviour
     }
     void SpawnTiles(int mvnt, Vector3 pos)
     {
-        GameObject.Instantiate(tile, pos, Quaternion.identity);
+        Vector2 TLeftCorn = new Vector2(pos[0] - 0.5F, pos[1] + 0.5F);
+        Vector2 BRightCorn = new Vector2(pos[0] + 0.5F, pos[1] - 0.5F);
+        Collider2D[] overlapElems = Physics2D.OverlapAreaAll(TLeftCorn, BRightCorn);
+        bool found = false;
+        for (int i=0; i<overlapElems.Length; i++){
+            if (overlapElems[i].name == "Highlighted Tile(Clone)"){
+                found = true;
+            }
+        }
+
+        if (!found){
+            GameObject.Instantiate(tile, pos, Quaternion.identity);
+        }
         if (mvnt == 0) { return; }
         else {
             // TODO: bounds checks
