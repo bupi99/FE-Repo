@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using UnityEngine;
@@ -21,8 +22,7 @@ public class TestSelection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector2 temp_pos = new Vector2(transform.position[0], transform.position[1]);
-        Collider2D[] overlapElems = FindOverlapElems(temp_pos);
+        Collider2D[] overlapElems = FindOverlapElems(new Vector2(transform.position[0], transform.position[1]));
         int numElems = overlapElems.Length;
 
         if (Input.GetKeyDown(".")){
@@ -55,8 +55,7 @@ public class TestSelection : MonoBehaviour
                     //Spawn Attack Tiles
                     SpawnTiles(lastselected.GetComponent<TestStats>().att_range, transform.position, "Highlighted Tile ATT");
                     //Remove the attacking tile on the character
-                    Vector2 tpos = new Vector2(transform.position[0], transform.position[1]);
-                    Collider2D[] playertileoverlap = FindOverlapElems(tpos);
+                    Collider2D[] playertileoverlap = FindOverlapElems(new Vector2(transform.position[0], transform.position[1]));
                     
                     for (int i=0; i<playertileoverlap.Length; i++) { 
                         if (playertileoverlap[i].name == "Highlighted Tile ATT(Clone)"){
@@ -106,13 +105,51 @@ public class TestSelection : MonoBehaviour
         if (!found){
             GameObject.Instantiate(tile, pos, Quaternion.identity);
         }
-        if (mvnt == 0) { return; }
+        if (mvnt <= 0) { return; }
         else {
             // TODO: bounds checks
-            SpawnTiles(mvnt - 1, new Vector3(pos[0] - 1, pos[1], pos[2]), tile_type);
-            SpawnTiles(mvnt - 1, new Vector3(pos[0], pos[1] - 1, pos[2]), tile_type);
-            SpawnTiles(mvnt - 1, new Vector3(pos[0] + 1, pos[1], pos[2]), tile_type);
-            SpawnTiles(mvnt - 1, new Vector3(pos[0], pos[1] + 1, pos[2]), tile_type);
+            Vector2 LeftVector = new Vector2(pos[0] - 1, pos[1]);
+            Vector2 DownVector = new Vector2(pos[0], pos[1] - 1);
+            Vector2 RightVector = new Vector2(pos[0] + 1, pos[1]);
+            Vector2 UpVector = new Vector2(pos[0], pos[1] + 1);
+            Vector2[] AllVector = new Vector2[] { LeftVector, DownVector, RightVector, UpVector };
+
+            Collider2D[] LeftBlockElems = FindOverlapElems(LeftVector);
+            Collider2D[] DownBlockElems = FindOverlapElems(DownVector);
+            Collider2D[] RightBlockElems = FindOverlapElems(RightVector);
+            Collider2D[] UpBlockElems = FindOverlapElems(UpVector);
+            Collider2D[][] AllBlockElems = new Collider2D[][] { LeftBlockElems, DownBlockElems, RightBlockElems, UpBlockElems };
+            bool LeftFound = false;
+            bool DownFound = false;
+            bool RightFound = false;
+            bool UpFound = false;
+            bool[] AllFound = new bool[] { LeftFound, DownFound, RightFound, UpFound };
+
+            // note if length>=1 then has to be a character but check all elems regardless
+            // go through each block and check if theres an character on it
+            for (int i=0; i<4; i++) { 
+                for (int j=0; j < AllBlockElems[i].Length; j++) { 
+                    // replace with enemy list at somepoint
+                    if (AllBlockElems[i][j].name == "Girl Sword Test (1)") {
+                        AllFound[i] = true;
+                    }
+                }
+            }
+
+            for (int i=0; i<4; i++){
+                // if highlighted tile we have someone blocking
+                if (tile_type == "Highlighted Tile"){
+                    if (!AllFound[i]){
+                        SpawnTiles(mvnt - 1, new Vector3(AllVector[i][0], AllVector[i][1], 0), tile_type);
+                    }
+                }
+                // otherwise we display some attacking tiles where they are
+                else {
+                    if (AllFound[i]) {
+                        SpawnTiles(mvnt - 1, new Vector3(AllVector[i][0], AllVector[i][1], 0), tile_type);
+                    }
+                }
+            }
         }
     }
 
