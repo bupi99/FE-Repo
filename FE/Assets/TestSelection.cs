@@ -21,9 +21,8 @@ public class TestSelection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector2 TLeftCorn = new Vector2(transform.position[0] - 0.5F, transform.position[1] + 0.5F);
-        Vector2 BRightCorn = new Vector2(transform.position[0] + 0.5F, transform.position[1] - 0.5F);
-        Collider2D[] overlapElems = Physics2D.OverlapAreaAll(TLeftCorn, BRightCorn);
+        Vector2 temp_pos = new Vector2(transform.position[0], transform.position[1]);
+        Collider2D[] overlapElems = FindOverlapElems(temp_pos);
         int numElems = overlapElems.Length;
 
         if (Input.GetKeyDown(".")){
@@ -56,9 +55,8 @@ public class TestSelection : MonoBehaviour
                     //Spawn Attack Tiles
                     SpawnTiles(lastselected.GetComponent<TestStats>().att_range, transform.position, "Highlighted Tile ATT");
                     //Remove the attacking tile on the character
-                    Vector2 TopLeft = new Vector2(transform.position[0] - 0.5F, transform.position[1] + 0.5F);
-                    Vector2 BotRight = new Vector2(transform.position[0] + 0.5F, transform.position[1] - 0.5F);
-                    Collider2D[] playertileoverlap = Physics2D.OverlapAreaAll(TopLeft, BotRight);
+                    Vector2 tpos = new Vector2(transform.position[0], transform.position[1]);
+                    Collider2D[] playertileoverlap = FindOverlapElems(tpos);
                     
                     for (int i=0; i<playertileoverlap.Length; i++) { 
                         if (playertileoverlap[i].name == "Highlighted Tile ATT(Clone)"){
@@ -94,12 +92,11 @@ public class TestSelection : MonoBehaviour
     }
     void SpawnTiles(int mvnt, Vector3 pos, string tile_type)
     {
-        Vector2 TLeftCorn = new Vector2(pos[0] - 0.5F, pos[1] + 0.5F);
-        Vector2 BRightCorn = new Vector2(pos[0] + 0.5F, pos[1] - 0.5F);
-        Collider2D[] overlapElems = Physics2D.OverlapAreaAll(TLeftCorn, BRightCorn);
+        Collider2D[] overlapElems = FindOverlapElems(pos);
         bool found = false;
         tile = GameObject.Find(tile_type); 
 
+        // check if tiles already there
         for (int i=0; i<overlapElems.Length; i++){
             if (overlapElems[i].name == tile_type+"(Clone)"){
                 found = true;
@@ -114,10 +111,8 @@ public class TestSelection : MonoBehaviour
             // TODO: bounds checks
             SpawnTiles(mvnt - 1, new Vector3(pos[0] - 1, pos[1], pos[2]), tile_type);
             SpawnTiles(mvnt - 1, new Vector3(pos[0], pos[1] - 1, pos[2]), tile_type);
-            SpawnTiles(mvnt - 1, new Vector3(pos[0], pos[1], pos[2] - 1), tile_type);
             SpawnTiles(mvnt - 1, new Vector3(pos[0] + 1, pos[1], pos[2]), tile_type);
             SpawnTiles(mvnt - 1, new Vector3(pos[0], pos[1] + 1, pos[2]), tile_type);
-            SpawnTiles(mvnt - 1, new Vector3(pos[0], pos[1], pos[2] + 1), tile_type);
         }
     }
 
@@ -127,5 +122,11 @@ public class TestSelection : MonoBehaviour
             GameObject temp = GameObject.Find(tile_type);
             GameObject.DestroyImmediate(temp);
         }
+    }
+    Collider2D[] FindOverlapElems(Vector2 pos)
+    {
+        Vector2 TLeftCorn = new Vector2(pos[0] - 0.5F, pos[1] + 0.5F);
+        Vector2 BRightCorn = new Vector2(pos[0] + 0.5F, pos[1] - 0.5F);
+        return Physics2D.OverlapAreaAll(TLeftCorn, BRightCorn);
     }
 }
