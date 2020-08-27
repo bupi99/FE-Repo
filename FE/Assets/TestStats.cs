@@ -20,7 +20,7 @@ public class TestStats : MonoBehaviour
         att_range = 1;
         health = 10;
         dmg = 3;
-        sight = 2;
+        sight = 3;
     }
 
     // Update is called once per frame
