@@ -17,6 +17,7 @@ public class TestSelection : MonoBehaviour
         menu = GameObject.Find("Menu Temp");
         tile = GameObject.Find("Highlighted Tile");
         att_tile = GameObject.Find("Highlighted Tile ATT");
+        FogReset();
     }
 
     // Update is called once per frame
@@ -50,10 +51,16 @@ public class TestSelection : MonoBehaviour
                 if (nameElem == "Highlighted Tile(Clone)"){
                     //Move Character to spot
                     lastselected.transform.position = transform.position;
+                    
                     //Remove the highlighted tiles
                     DestroyTiles("Highlighted Tile(Clone)");
+                    
+                    //Reset Fog
+                    FogReset();
+                    
                     //Spawn Attack Tiles
                     SpawnTiles(lastselected.GetComponent<TestStats>().att_range, transform.position, "Highlighted Tile ATT");
+                    
                     //Remove the attacking tile on the character
                     Collider2D[] playertileoverlap = FindOverlapElems(new Vector2(transform.position[0], transform.position[1]));
                     
@@ -160,10 +167,53 @@ public class TestSelection : MonoBehaviour
             GameObject.DestroyImmediate(temp);
         }
     }
+
     Collider2D[] FindOverlapElems(Vector2 pos)
     {
         Vector2 TLeftCorn = new Vector2(pos[0] - 0.5F, pos[1] + 0.5F);
         Vector2 BRightCorn = new Vector2(pos[0] + 0.5F, pos[1] - 0.5F);
         return Physics2D.OverlapAreaAll(TLeftCorn, BRightCorn);
+    }
+
+    void FogReset()
+    {
+        GameObject FogTile = GameObject.Find("Fog");
+        //Destroy old tiles so no overlap
+        DestroyTiles("Fog(Clone)");
+        for (int x=-11; x < 11; x++)
+        {
+            for (int y=-5; y < 5; y++)
+            {
+                GameObject.Instantiate(FogTile, new Vector3(x + 0.5F, y + 0.5F, 0), Quaternion.identity);
+            }
+        }
+        
+        // Go through ally list and remove fog around them
+        // only ally is currently "Girl Sword Test"
+        GameObject Ally = GameObject.Find("Girl Sword Test");
+        int Ally_sight = Ally.GetComponent<TestStats>().sight;
+
+        void FogDelete(Vector2 pos, int vis)
+        {
+            Collider2D[] overlapElems = FindOverlapElems(pos);
+            for (int i=0; i<overlapElems.Length; i++)
+            {
+                if (overlapElems[i].name == "Fog(Clone)")
+                {
+
+                    GameObject.DestroyImmediate(overlapElems[i].gameObject);
+                }
+            }
+            if (vis == 0){return;}
+            else
+            {
+                FogDelete(new Vector2(pos[0] - 1, pos[1]), vis - 1);
+                FogDelete(new Vector2(pos[0], pos[1] - 1), vis - 1);
+                FogDelete(new Vector2(pos[0] + 1, pos[1]), vis - 1);
+                FogDelete(new Vector2(pos[0], pos[1] + 1), vis - 1);
+            }
+        }
+        FogDelete(Ally.transform.position, Ally_sight);
+        
     }
 }

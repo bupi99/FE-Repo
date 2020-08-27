@@ -10,6 +10,8 @@ public class TestStats : MonoBehaviour
     public int att_range;
     public int health;
     public int dmg;
+    public int sight;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +20,7 @@ public class TestStats : MonoBehaviour
         att_range = 1;
         health = 10;
         dmg = 3;
+        sight = 2;
     }
 
     // Update is called once per frame
