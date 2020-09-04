@@ -15,12 +15,14 @@ public class TestStats : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        /*
         mvnt = 2;
         strength = 4;
         att_range = 1;
         health = 10;
         dmg = 3;
         sight = 3;
+        */
     }
 
     // Update is called once per frame

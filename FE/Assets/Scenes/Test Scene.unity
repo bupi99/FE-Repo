@@ -201,7 +201,7 @@ MonoBehaviour:
   strength: 0
   idk: 0
   att_range: 0
-  health: 0
+  health: 15
   dmg: 0
   sight: 0
 --- !u!61 &794274482
@@ -797,13 +797,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e9de20ca7d06064892078755cb78b5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mvnt: 0
-  strength: 0
-  idk: 0
-  att_range: 0
-  health: 0
-  dmg: 0
-  sight: 3
+  mvnt: 3
+  strength: 4
+  idk: 4
+  att_range: 4
+  health: 10
+  dmg: 4
+  sight: 5
 --- !u!61 &1491643655
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -905,7 +905,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1729904526}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.09, y: 6.02, z: 0}
+  m_LocalPosition: {x: -12.7, y: 1.83, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
