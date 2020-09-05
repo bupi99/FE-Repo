@@ -11,35 +11,56 @@ public class TestSelection : MonoBehaviour
     public GameObject lastselected;
     public GameObject tile;
     public GameObject att_tile;
+    public GameObject[] Allies;
+    public GameObject[] Enemies;
+
     // Start is called before the first frame update
     void Start()
     {
         menu = GameObject.Find("Menu Temp");
         tile = GameObject.Find("Highlighted Tile");
         att_tile = GameObject.Find("Highlighted Tile ATT");
+
+        //Create the list of Allies and enemies
+        //Maybe tag gameobjects in the future?
+        Allies = new GameObject[2] { GameObject.Find("Girl Sword Test"), GameObject.Find("Guy Dagger Test") };
+        Enemies = new GameObject[2] { GameObject.Find("Girl Sword Test (1)"), GameObject.Find("Guy Dagger Test (1)") };
+
         FogReset();
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log(Enemies.Length);
         Collider2D[] overlapElems = FindOverlapElems(new Vector2(transform.position[0], transform.position[1]));
         int numElems = overlapElems.Length;
 
         if (Input.GetKeyDown(".")){
             if (numElems >= 1){
                 string nameElem = overlapElems[0].name;
-                if (nameElem == "Girl Sword Test"){
+                bool found = false;
+                for (int i=0; i<Allies.Length; i++)
+                {
+                    if (Allies[i].name == nameElem)
+                    {
+                        found = true;
+                    }
+                }
+                if (found){
                     if (numElems > 1){
                         if (overlapElems[1].name == "Highlighted Tile(Clone)"){
                             //Remove the highlighted tiles
                             DestroyTiles("Highlighted Tile(Clone)");
                             //Spawn Attack Tiles
+                            //Debug.Log("spawning ATT Tiles");
                             SpawnTiles(lastselected.GetComponent<TestStats>().att_range, transform.position, "Highlighted Tile ATT");
                         }
                     }
                     else
                     {
+                        // Remove Highlighted Tiles
+                        DestroyTiles("Highlighted Tile(Clone)");
                         // Remove Attacking tiles
                         DestroyTiles("Highlighted Tile ATT(Clone)");
                         // Set last selected character
@@ -62,6 +83,7 @@ public class TestSelection : MonoBehaviour
                     SpawnTiles(lastselected.GetComponent<TestStats>().att_range, transform.position, "Highlighted Tile ATT");
                     
                     //Remove the attacking tile on the character
+                    
                     Collider2D[] playertileoverlap = FindOverlapElems(new Vector2(transform.position[0], transform.position[1]));
                     
                     for (int i=0; i<playertileoverlap.Length; i++) { 
@@ -75,7 +97,7 @@ public class TestSelection : MonoBehaviour
                 if (nameElem == "Highlighted Tile ATT(Clone)"){
                     if (numElems > 1) {
                         //Attack the character there?
-                        Debug.Log("Attacking");
+                        //Debug.Log("Attacking");
                         int damage = lastselected.GetComponent<TestStats>().dmg;
                         GameObject Enemy = GameObject.Find(overlapElems[1].name);
                         Enemy.GetComponent<TestStats>().GettingAttacked(damage);
@@ -100,17 +122,46 @@ public class TestSelection : MonoBehaviour
     {
         Collider2D[] overlapElems = FindOverlapElems(pos);
         bool found = false;
-        tile = GameObject.Find(tile_type); 
+        tile = GameObject.Find(tile_type);
 
-        // check if tiles already there
-        for (int i=0; i<overlapElems.Length; i++){
-            if (overlapElems[i].name == tile_type+"(Clone)"){
+        // check if tiles already there / for allies
+        for (int i = 0; i < overlapElems.Length; i++)
+        {
+            if (overlapElems[i].name == tile_type + "(Clone)")
+            {
                 found = true;
             }
+            for (int j = 0; j < Allies.Length; j++)
+            {
+                if (overlapElems[i].name == Allies[j].name)
+                {
+                    found = true;
+                }
+            }
         }
-
         if (!found){
-            GameObject.Instantiate(tile, pos, Quaternion.identity);
+            if (tile_type == "Highlighted Tile")
+            {
+                GameObject.Instantiate(tile, pos, Quaternion.identity);
+            }
+            else
+            {
+                found = false;
+                for (int i = 0; i < overlapElems.Length; i++)
+                {
+                    for (int j = 0; j < Enemies.Length; j++)
+                    {
+                        if (overlapElems[i].name == Enemies[j].name)
+                        {
+                            found = true;
+                        }
+                    }
+                }
+                if (found)
+                {
+                    GameObject.Instantiate(tile, pos, Quaternion.identity);
+                }
+            }
         }
         if (mvnt <= 0) { return; }
         else {
@@ -136,9 +187,14 @@ public class TestSelection : MonoBehaviour
             // go through each block and check if theres an character on it
             for (int i=0; i<4; i++) { 
                 for (int j=0; j < AllBlockElems[i].Length; j++) { 
-                    // replace with enemy list at somepoint
-                    if (AllBlockElems[i][j].name == "Girl Sword Test (1)") {
-                        AllFound[i] = true;
+                    
+                    for (int k=0; k<Enemies.Length; k++)
+                    {
+                        //Debug.Log(AllBlockElems[i][j].name);
+                        if (AllBlockElems[i][j].name == Enemies[k].name)
+                        {
+                            AllFound[i] = true;
+                        }
                     }
                 }
             }
@@ -152,9 +208,7 @@ public class TestSelection : MonoBehaviour
                 }
                 // otherwise we display some attacking tiles where they are
                 else {
-                    if (AllFound[i]) {
-                        SpawnTiles(mvnt - 1, new Vector3(AllVector[i][0], AllVector[i][1], 0), tile_type);
-                    }
+                    SpawnTiles(mvnt - 1, new Vector3(AllVector[i][0], AllVector[i][1], 0), tile_type);
                 }
             }
         }
@@ -168,7 +222,7 @@ public class TestSelection : MonoBehaviour
         }
     }
 
-    Collider2D[] FindOverlapElems(Vector2 pos)
+    Collider2D[] FindOverlapElems(Vector2 pos)  
     {
         Vector2 TLeftCorn = new Vector2(pos[0] - 0.5F, pos[1] + 0.5F);
         Vector2 BRightCorn = new Vector2(pos[0] + 0.5F, pos[1] - 0.5F);
@@ -187,11 +241,6 @@ public class TestSelection : MonoBehaviour
                 GameObject.Instantiate(FogTile, new Vector3(x + 0.5F, y + 0.5F, 0), Quaternion.identity);
             }
         }
-        
-        // Go through ally list and remove fog around them
-        // only ally is currently "Girl Sword Test"
-        GameObject Ally = GameObject.Find("Girl Sword Test");
-        int Ally_sight = Ally.GetComponent<TestStats>().sight;
 
         void FogDelete(Vector2 pos, int vis)
         {
@@ -213,7 +262,17 @@ public class TestSelection : MonoBehaviour
                 FogDelete(new Vector2(pos[0], pos[1] + 1), vis - 1);
             }
         }
-        FogDelete(Ally.transform.position, Ally_sight);
-        
+        // Go through ally list and remove fog around them
+        GameObject Ally;
+        int Ally_sight;
+
+        for (int i=0; i < Allies.Length; i++)
+        {
+
+            Ally = Allies[i];
+            Ally_sight = Ally.GetComponent<TestStats>().sight;
+            FogDelete(Ally.transform.position, Ally_sight);
+        }        
     }
+
 }

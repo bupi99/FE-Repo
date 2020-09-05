@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,28 +12,32 @@ public class TestStats : MonoBehaviour
     public int health;
     public int dmg;
     public int sight;
+    public GameObject cursor;
 
     // Start is called before the first frame update
     void Start()
     {
-        /*
-        mvnt = 2;
-        strength = 4;
-        att_range = 1;
-        health = 10;
-        dmg = 3;
-        sight = 3;
-        */
+        cursor = GameObject.Find("Cursor");
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (health <= 0){
-            GameObject.DestroyImmediate(gameObject);
-        }
+        
     }
     public void GettingAttacked(int damage) {
         health -= damage;
+        CheckDeath();
+    }
+    
+    void CheckDeath()
+    {
+        if (health <= 0)
+        {
+            //GameObject.DestroyImmediate(this.gameObject);
+            // yeet off the screen to delete makes life easier
+
+            transform.position = new Vector3(100, 100, 0);
+        }
     }
 }
