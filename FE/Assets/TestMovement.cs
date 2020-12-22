@@ -20,10 +20,11 @@ public class TestMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         mytime += Time.deltaTime;
         float moveHor = 0;
         float moveVer = 0;
-
+        /*
         if (mytime >= 0.25) {
             moveHor = Input.GetAxis("Horizontal");
             moveVer = Input.GetAxis("Vertical");
@@ -45,8 +46,8 @@ public class TestMovement : MonoBehaviour
 
             mytime = 0.0F;
         }
-
-        /*
+        */
+        
         // button hold = 1 move max
         if (Input.GetKeyDown("a")){
             moveHor -= 1;
@@ -56,12 +57,12 @@ public class TestMovement : MonoBehaviour
         }
 
         if (Input.GetKeyDown("s")){
-            moveVer -= 1;
+            moveVer -= 1;   
         }
         if (Input.GetKeyDown("w")){
             moveVer += 1;
         }
-        */
+        
         Vector3 move = new Vector3(moveHor, moveVer, 0);
         Vector3 newpos = transform.position + move;
         if (Math.Abs(newpos[0])>11){
