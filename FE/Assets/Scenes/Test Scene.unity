@@ -343,8 +343,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e9de20ca7d06064892078755cb78b5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mvnt: 0
-  strength: 0
+  base_mvnt: 3
+  mvnt: 3
+  strength: 3
   stamina: 10
   base_stamina: 10
   att_range: 0
@@ -358,6 +359,8 @@ MonoBehaviour:
   ST_mask: {fileID: 0}
   bar_instance: {fileID: 0}
   bar_flag: 0
+  prev_position: {x: 0, y: 0, z: 0}
+  stamina_timer: 0
 --- !u!61 &794274482
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -694,6 +697,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e9de20ca7d06064892078755cb78b5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  base_mvnt: 3
   mvnt: 3
   strength: 12
   stamina: 10
@@ -709,6 +713,8 @@ MonoBehaviour:
   ST_mask: {fileID: 0}
   bar_instance: {fileID: 0}
   bar_flag: 0
+  prev_position: {x: 0, y: 0, z: 0}
+  stamina_timer: 0
 --- !u!212 &1036411847
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1089,6 +1095,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e9de20ca7d06064892078755cb78b5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  base_mvnt: 3
   mvnt: 3
   strength: 4
   stamina: 10
@@ -1104,6 +1111,8 @@ MonoBehaviour:
   ST_mask: {fileID: 0}
   bar_instance: {fileID: 0}
   bar_flag: 0
+  prev_position: {x: 0, y: 0, z: 0}
+  stamina_timer: 0
 --- !u!61 &1491643655
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1385,6 +1394,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e9de20ca7d06064892078755cb78b5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  base_mvnt: 3
   mvnt: 3
   strength: 4
   stamina: 10
@@ -1400,6 +1410,8 @@ MonoBehaviour:
   ST_mask: {fileID: 0}
   bar_instance: {fileID: 0}
   bar_flag: 0
+  prev_position: {x: 0, y: 0, z: 0}
+  stamina_timer: 0
 --- !u!61 &1729904530
 BoxCollider2D:
   m_ObjectHideFlags: 0
